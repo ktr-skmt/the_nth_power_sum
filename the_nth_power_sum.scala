@@ -1,44 +1,36 @@
 object TheNthPowerSum {
   var y = 0D
   /* compareBetweenAlgo(x : Int, n : Int, p : Int)
-	 * x  >  0
-	 * n  >  0
-	 * p >= -1
-	 */
+   * x  >  0
+   * n  >  0
+   * p >= -1
+   */
   def main(args : Array[String]) =
-    compareBetweenAlgo(7, 11, 1)
+    compareBetweenAlgo(15, 20, 3)
 
   def calcRepeatedCombination(x : Int, n : Int) : Double = {
-    val r = x + n - 1
-    var numerator   = 1L
-    var denominator = 1L
-    if (x <= n) {
-      for (i <- n + 1 to r) numerator   *= i
-      for (i <- 2 to x - 1) denominator *= i
-    } else {
-      for (i <- x to r) numerator   *= i
-      for (i <- 2 to n) denominator *= i
-    }
-    numerator / denominator
+    var ret = 1D
+    var boundary = 0
+    if (x <= n) boundary = x - 1
+    else        boundary = n
+    for (i <- 1 to boundary)
+      ret *= (x + n - i).toDouble / i
+    ret
   }
   //P = any
   def calcAlgo1(x : Int, n : Int, p : Int) : Unit =
     if (n > 0) for (i <- 1 to x) calcAlgo1(i, n - 1, p)
     else y += math.pow(x, p)
-  def calcF_0(k : Int, p : Int) : Int = {
+  def calcF_0(k : Int, p : Int) : Int =
     (p - k) % 2 match {
       case 0 =>  1
       case _ => -1
     }
-  }
   def calcF_1(k : Int, x : Int, n : Int) : Double = {
-    var numerator   = 1D
-    var denominator = 1D
-    for (i <- 1 to k) {
-      numerator *= i * (x + n + i - 1)
-      denominator *= n + i
-    }
-    numerator / denominator
+    var ret = 1D
+    for (i <- 1 to k)
+      ret *= (i * (x + n + i - 1)).toDouble / (n + i)
+    ret
   }
   def calcF_2(k : Int, p : Int) : Double = {
     var f = 0D
@@ -103,7 +95,7 @@ object TheNthPowerSum {
     var time = System.currentTimeMillis
     proc
     time = System.currentTimeMillis - time
-    println("y = " + y + " [total " + time + " ms]")
+    println("y = " + y + " [" + time + " ms]")
   }
   def printlnResult(algo : Int)(proc : => Unit) : Unit = {
     print("Algorithm " + algo)
