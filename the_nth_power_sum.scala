@@ -10,9 +10,8 @@ object TheNthPowerSum {
 
   def calcRepeatedCombination(x : Int, n : Int) : Double = {
     var ret = 1D
-    var boundary = 0
+    var boundary = n
     if (x <= n) boundary = x - 1
-    else        boundary = n
     for (i <- 1 to boundary)
       ret *= (x + n - i).toDouble / i
     ret
