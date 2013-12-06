@@ -6,13 +6,12 @@ object TheNthPowerSum {
    * p >= -1
    */
   def main(args : Array[String]) =
-    compareBetweenAlgo(15, 20, 3)
+    compareBetweenAlgo(15, 30, 3)
 
   def calcRepeatedCombination(x : Int, n : Int) : Double = {
     var ret = 1D
-    var boundary = 0
+    var boundary = n
     if (x <= n) boundary = x - 1
-    else        boundary = n
     for (i <- 1 to boundary)
       ret *= (x + n - i).toDouble / i
     ret
@@ -98,9 +97,9 @@ object TheNthPowerSum {
     println("y = " + y + " [" + time + " ms]")
   }
   def printlnResult(algo : Int)(proc : => Unit) : Unit = {
-    print("Algorithm " + algo)
-    if (algo == 1) print (" (Baseline):")
-    else           print (" (Proposal):")
+    val labels = Array[String]("Baseline", "Proposal")
+    if (Array[Int](1, 2) contains algo)
+      print("Algorithm %d (%s): ".format(algo, labels(algo - 1)))
     printlnExecutionTime(proc)
     y = 0
   }
